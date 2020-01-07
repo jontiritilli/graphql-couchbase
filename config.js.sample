@@ -1,0 +1,7 @@
+const couchbaseConfig = {
+  username: "<enter username here>: String",
+  password: "<enter password here>: String",
+  bucketName: "<enter bucketName here>: String"
+};
+
+module.exports = couchbaseConfig;

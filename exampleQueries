@@ -1,0 +1,13 @@
+query {
+  accounts {
+    firstname,
+    lastname
+  }
+}
+
+mutation {
+  createAccount (
+    firstname: "Erik",
+    lastname: "Taylor"
+  ) { firstname }
+}
