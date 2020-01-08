@@ -37,8 +37,6 @@ const resolvers = {
     return result;
   },
   users: async () => {
-    let rows = null;
-    let results = null;
     const commandText = `
       select *
       from ${bucket._name}
@@ -46,16 +44,16 @@ const resolvers = {
     `;
     try {
       rows = (await db.query(commandText)).rows;
-      console.log(rows);
+      console.log("rows", rows);
       results = rows.map(row => {
-        return {
-          ...row.example
-        };
+        let [modRow] = Object.keys(row).map(key => row[key]);
+        return modRow;
       });
+      console.log("results", results);
+      return results;
     } catch (e) {
       console.log("users", "error: ", e);
     }
-    return results;
   }
 };
 
