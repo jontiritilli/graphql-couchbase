@@ -2,10 +2,10 @@ const { buildSchema } = require("graphql");
 
 module.exports = buildSchema(`
   type Query {
-    account(id: String!): Account,
-    accounts: [Account]
+    user(id: String!): User,
+    users: [User]
   }
-  type Account {
+  type User {
     id: String,
     firstname: String,
     lastname: String,
@@ -13,11 +13,11 @@ module.exports = buildSchema(`
     occupation: String
   }
   type Mutation {
-    createAccount(
+    createUser(
       firstname: String!,
       lastname: String!,
       age: Int!,
       occupation: String!
-    ): Account
+    ): User
   }
 `);

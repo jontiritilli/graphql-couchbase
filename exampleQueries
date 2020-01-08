@@ -1,13 +1,22 @@
 query {
-  accounts {
+  users {
     firstname,
-    lastname
+    lastname,
+    age
   }
 }
-
+query {
+  user(id: "id") {
+    lastname,
+    firstname
+    age
+  }
+}
 mutation {
-  createAccount (
-    firstname: "Erik",
-    lastname: "Taylor"
-  ) { firstname }
+  createUser (
+    firstname: "Jonathan",
+    lastname: "Tiritilli",
+    occupation: "Application Developer",
+    age: 30
+  ) { firstname, lastname }
 }

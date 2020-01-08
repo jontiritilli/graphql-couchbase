@@ -1,5 +1,5 @@
 const Couchbase = require("couchbase");
-const UUID = require("uuid");
+const uniqId = require("uniqId");
 const config = require("./config");
 
 const dbAuth = {
@@ -12,32 +12,49 @@ const bucket = db.bucket(config.bucketName);
 const collection = bucket.defaultCollection();
 
 const resolvers = {
-  createAccount: async data => {
-    const id = UUID.v4();
+  createUser: async data => {
+    const id = uniqId();
     const account = {
+      id,
       ...data,
-      type: "account"
+      type: "user"
     };
-    const result = await collection.upsert(id, account);
-    return result;
+    try {
+      await collection.insert(id, account);
+    } catch (e) {
+      console.log("createUser", "error: ", e);
+    }
+    console.log(account);
+    return account;
   },
-  account: data => {
+  user: async data => {
     const { id } = data;
-    const result = collection.get(id);
+    try {
+      result = (await collection.get(id)).value;
+    } catch (e) {
+      console.log("user", "error: ", e);
+    }
     return result;
   },
-  accounts: async () => {
+  users: async () => {
+    let rows = null;
+    let results = null;
     const commandText = `
       select *
       from ${bucket._name}
-      where type = "account"`;
-    const { rows } = await db.query(commandText);
-    const results = rows.map(row => {
-      return {
-        ...row.example
-      };
-    });
-    console.log(results);
+      where type = "user"
+    `;
+    try {
+      rows = (await db.query(commandText)).rows;
+      console.log(rows);
+      results = rows.map(row => {
+        return {
+          ...row.example
+        };
+      });
+    } catch (e) {
+      console.log("users", "error: ", e);
+    }
     return results;
   }
 };
