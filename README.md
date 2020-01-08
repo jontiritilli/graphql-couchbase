@@ -38,7 +38,7 @@ Node and NPM are required, as is Docker and Docker Compose. Please ensure these 
     npm start
     ```
 
-1. Go to localhost:3000/graphql
+1. Go to [GraphiQL](localhost:3000/graphql)
 
 ### DB Setup
 1. Using the sample GraphQL mutation available in exampleQueries, add some users to your Couchbase bucket
