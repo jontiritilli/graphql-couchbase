@@ -44,12 +44,10 @@ const resolvers = {
     `;
     try {
       rows = (await db.query(commandText)).rows;
-      console.log("rows", rows);
       results = rows.map(row => {
         let [modRow] = Object.keys(row).map(key => row[key]);
         return modRow;
       });
-      console.log("results", results);
       return results;
     } catch (e) {
       console.log("users", "error: ", e);
